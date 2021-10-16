@@ -1,34 +1,59 @@
 <div class="wrapper">
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-  
-      <!-- Position Column -->
-      <ng-container matColumnDef="position">
-        <th mat-header-cell *matHeaderCellDef> No. </th>
-        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-      </ng-container>
-    
-      <!-- Name Column -->
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-      </ng-container>
-    
-      <!-- Weight Column -->
-      <ng-container matColumnDef="weight">
-        <th mat-header-cell *matHeaderCellDef> Weight </th>
-        <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
-      </ng-container>
-    
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="symbol">
-        <th mat-header-cell *matHeaderCellDef> Symbol </th>
-        <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
-      </ng-container>
-    
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  
+    <!-- Position Column -->
+    <ng-container matColumnDef="sos_id">
+      <th mat-header-cell *matHeaderCellDef>No.</th>
+      <td mat-cell *matCellDef="let element">{{ element.sos_id }}</td>
+    </ng-container>
+
+    <!-- x Column -->
+    <ng-container matColumnDef="sos_pos_x">
+      <th mat-header-cell *matHeaderCellDef>x</th>
+      <td mat-cell *matCellDef="let element">{{ element.sos_pos_x }}</td>
+    </ng-container>
+
+    <!-- y Column -->
+    <ng-container matColumnDef="sos_pos_y">
+      <th mat-header-cell *matHeaderCellDef>y</th>
+      <td mat-cell *matCellDef="let element">{{ element.sos_pos_y }}</td>
+    </ng-container>
+
+    <!-- desc Column -->
+    <ng-container matColumnDef="sos_pos_zip">
+      <th mat-header-cell *matHeaderCellDef>zip</th>
+      <td mat-cell *matCellDef="let element">{{ element.sos_pos_zip }}</td>
+    </ng-container>
+
+    <!-- y Column -->
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef>description</th>
+      <td mat-cell *matCellDef="let element">{{ element.description }}</td>
+    </ng-container>
+
+    <!-- delete Column -->
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef>delete</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-flat-button color="primary" (click)="deleteSos(element.sos_id)">delete</button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
-    
-</div>
+
+  <hr>
+
+  <form class="example-form" >
+    <mat-form-field>
+      <mat-label>ZIP</mat-label>
+      <input color="primary" type="email" matInput placeholder="Ex. 22124">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Description</mat-label>
+      <input color="primary" type="email" matInput placeholder="Ex. I need help!">
+    </mat-form-field>
+  </form>
+  <button mat-flat-button (click)="addSos()">Submit</button>
   
+  </div>

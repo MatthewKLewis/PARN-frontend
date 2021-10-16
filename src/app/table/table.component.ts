@@ -1,23 +1,20 @@
 import { Component, OnInit } from '@angular/core';
+import { SosService } from '../services/sos.service';
+import {FormControl, NgForm, Validators} from '@angular/forms';
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
+export interface SOS {
+  sos_id: number;
+  sos_pos_x: number;
+  sos_pos_y: number;
+  sos_pos_zip: number;
+  description: string;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
+const ELEMENT_DATA: SOS[] = [
+  {sos_id: 1, sos_pos_x: 1, sos_pos_y: 1, sos_pos_zip: 20723, description: '1'},
+  {sos_id: 2, sos_pos_x: 2, sos_pos_y: 2, sos_pos_zip: 20723, description: '1'},
+  {sos_id: 3, sos_pos_x: 3, sos_pos_y: 3, sos_pos_zip: 20723, description: '1'},
+  {sos_id: 4, sos_pos_x: 4, sos_pos_y: 4, sos_pos_zip: 20723, description: '1'},
 ];
 
 @Component({
@@ -27,13 +24,31 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class TableComponent implements OnInit {
 
-  constructor() { }
+  constructor(public sosService: SosService) { }
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  displayedColumns: string[] = ['sos_id', 'sos_pos_x', 'sos_pos_y', 'sos_pos_zip', 'description', 'delete'];
   dataSource = ELEMENT_DATA;
+  sosFormControl = new FormControl('', [
+    Validators.required,
+    Validators.email,
+  ]);
 
   ngOnInit(): void {
-    console.log('hello table')
+    this.sosService.getAllSos().subscribe((res:any)=>{
+      this.dataSource = res.data.rows
+    })
+  }
+
+  addSos() {
+    this.sosService.addSos(10, 10, 22124, 'I need water!').subscribe((res:any)=>{
+      this.ngOnInit();
+    })
+  }
+
+  deleteSos(id: number) {
+    this.sosService.deleteSos(id).subscribe((res:any)=>{
+      this.ngOnInit();
+    })
   }
 
 }
